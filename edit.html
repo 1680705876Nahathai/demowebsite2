@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Sushi</title>
+</head>
+<body>
+    <h1>Edit Sushi 🍣</h1>
+
+    <form method="POST">
+        ชื่อ: <input type="text" name="name" value="{{ sushi[1] }}"><br>
+        ราคา: <input type="number" name="price" value="{{ sushi[2] }}"><br>
+        จำนวน: <input type="number" name="stock" value="{{ sushi[3] }}"><br>
+
+        หมวดหมู่:
+        <select name="category_id">
+            {% for c in categories %}
+                <option value="{{ c[0] }}" {% if c[0] == sushi[4] %}selected{% endif %}>
+                    {{ c[1] }}
+                </option>
+            {% endfor %}
+        </select><br>
+
+        รูป (URL): <input type="text" name="image" value="{{ sushi[5] }}"><br>
+
+        <button type="submit">อัปเดต</button>
+    </form>
+
+    <a href="/">กลับ</a>
+</body>
+</html>

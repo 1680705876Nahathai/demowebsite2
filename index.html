@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sushi Shop 🍣</title>
+</head>
+<body>
+    <h1>Sushi Shop 🍣</h1>
+    <a href="/add">+ Add New Sushi</a>
+    <hr>
+
+    {% for s in sushi %}
+        <h3>{{ s[1] }}</h3>
+        <img src="{{ s[5] }}" width="200"><br>
+        ราคา: {{ s[2] }} บาท<br>
+        หมวดหมู่: {{ s[4] }}<br>
+        คงเหลือ: {{ s[3] }} ชิ้น<br>
+
+        <a href="/edit/{{ s[0] }}">แก้ไข</a>
+        <a href="/delete/{{ s[0] }}">ลบ</a>
+        <hr>
+    {% endfor %}
+</body>
+</html>
