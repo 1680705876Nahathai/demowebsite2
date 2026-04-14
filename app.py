@@ -3,13 +3,10 @@ import sqlite3
 
 app = Flask(__name__)
 
-# ✅ ใช้ path เต็ม (สำคัญมาก)
-DB_PATH = "/home/1680705876Nahathai/demowebsite2/sushi.db"
-
 def get_db():
-    return sqlite3.connect(DB_PATH)
+    return sqlite3.connect("sushi.db")
 
-# ✅ สร้าง database + table + ข้อมูลเริ่มต้น
+# สร้าง table
 def init_db():
     conn = get_db()
     cur = conn.cursor()
@@ -57,29 +54,18 @@ def init_db():
     conn.commit()
     conn.close()
 
-# ✅ เรียกตอนเว็บเริ่มทำงาน (แก้ปัญหา PythonAnywhere)
-@app.before_first_request
-def create_tables():
-    init_db()
-
-# ---------------- ROUTES ----------------
-
 @app.route('/')
 def index():
     conn = get_db()
     cur = conn.cursor()
-
     cur.execute("""
         SELECT sushi.id, sushi.name, sushi.price, sushi.stock, category.name, sushi.image
         FROM sushi
         JOIN category ON sushi.category_id = category.id
     """)
-
     sushi = cur.fetchall()
     conn.close()
-
     return render_template("index.html", sushi=sushi)
-
 
 @app.route('/add', methods=['GET', 'POST'])
 def add():
@@ -105,9 +91,7 @@ def add():
     cur.execute("SELECT * FROM category")
     categories = cur.fetchall()
     conn.close()
-
     return render_template("add.html", categories=categories)
-
 
 @app.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit(id):
@@ -138,17 +122,17 @@ def edit(id):
     categories = cur.fetchall()
 
     conn.close()
-
     return render_template("edit.html", sushi=sushi, categories=categories)
-
 
 @app.route('/delete/<int:id>')
 def delete(id):
     conn = get_db()
     cur = conn.cursor()
-
     cur.execute("DELETE FROM sushi WHERE id=?", (id,))
     conn.commit()
     conn.close()
-
     return redirect('/')
+
+if __name__ == '__main__':
+    init_db()
+    app.run(debug=True)
