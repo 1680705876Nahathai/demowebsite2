@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sushi Shop</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+
+    <h1 class="text-center mb-4">🍣 Sushi Shop</h1>
+
+    <div class="text-end mb-3">
+        <a href="/add" class="btn btn-primary">+ Add Sushi</a>
+    </div>
+
+    <div class="row">
+        {% for s in sushi %}
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <img src="{{ s[5] }}" class="card-img-top" style="height:200px; object-fit:cover;">
+                
+                <div class="card-body">
+                    <h5 class="card-title">{{ s[1] }}</h5>
+                    <p class="card-text">
+                        💰 Price: {{ s[2] }} บาท<br>
+                        📦 Stock: {{ s[3] }}<br>
+                        🏷 Category: {{ s[4] }}
+                    </p>
+
+                    <a href="/edit/{{ s[0] }}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="/delete/{{ s[0] }}" class="btn btn-danger btn-sm">Delete</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+</body>
+</html>
